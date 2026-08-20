@@ -8,7 +8,7 @@ def digit(n, k):
     >>> digit(3579, 10)
     0
     """
-    return ____
+    return n // (10 ** k) % 10
 
 
 def middle(a, b, c):
@@ -26,11 +26,11 @@ def middle(a, b, c):
     >>> middle(30, 5, 40)
     30
     """
-    return ____
+    return a + b + c - min(a, b, c) - max(a, b, c)
 
 
 def falling(n, k):
-    """Compute the falling factorial of n to depth k.
+    """Compute the falling factorial of n to depth k.c
 
     >>> falling(6, 3)  # 6 * 5 * 4
     120
@@ -42,6 +42,10 @@ def falling(n, k):
     1
     """
     "*** YOUR CODE HERE ***"
+    num = 1
+    for i in range(k):
+        num *= n - i
+    return num
 
 
 def divisible_by_k(n, k):
@@ -65,6 +69,13 @@ def divisible_by_k(n, k):
     0
     """
     "*** YOUR CODE HERE ***"
+    if n % k == 0:
+        count = n // k
+    else:
+        count = 0
+    for i in range(count):
+        print(k * (i + 1))
+    return count
 
 
 def sum_digits(y):
@@ -81,6 +92,11 @@ def sum_digits(y):
     6
     """
     "*** YOUR CODE HERE ***"
+    sum = 0
+    while y > 0:
+        sum += y % 10
+        y //= 10
+    return sum
 
 
 def double_eights(n):
@@ -99,4 +115,13 @@ def double_eights(n):
     False
     """
     "*** YOUR CODE HERE ***"
-
+    num_of_eights = 0
+    while n > 0:
+        if n % 10 == 8:
+            num_of_eights += 1
+        else:
+            num_of_eights = 0
+        if num_of_eights == 2:
+            return True
+        n //= 10
+    return False
