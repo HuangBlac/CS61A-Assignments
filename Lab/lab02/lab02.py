@@ -14,24 +14,25 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
-
+    return lambda x: f(g(x)) == g(f(x))
 
 def sum_digits(y):
     """Return the sum of the digits of non-negative integer y."""
-    total = 0
+    "*** YOUR CODE HERE ***"
+    sum = 0
     while y > 0:
-        total, y = total + y % 10, y // 10
-    return total
+        sum += y % 10
+        y //= 10
+    return sum
 
 def is_prime(n):
     """Return whether positive integer n is prime."""
-    if n == 1:
-        return False
-    k = 2
-    while k < n:
-        if n % k == 0:
+    "*** YOUR CODE HERE ***"
+    i = 2
+    while i < n:
+        if n % i == 0:
             return False
-        k += 1
+        i += 1
     return True
 
 def count_cond(condition):
@@ -60,6 +61,14 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
+    count = 0
+    i = 1
+    function = lambda n: lambda i: condition(n, i)
+    while i <= n:
+        if function(n)(i):
+            count += 1
+        i += 1
+    return function(n)
 
 
 def multiple(a, b):
