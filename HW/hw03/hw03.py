@@ -173,7 +173,7 @@ def count_dollars_upward(total):
     def _count_dollars_upward(total,bill):
         if total < 0:
             return 0
-        if total == 1:
+        if total == 0:
             return 1
         if bill == 100:
             return (total % 100 == 0)
