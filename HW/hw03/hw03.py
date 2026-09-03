@@ -170,7 +170,16 @@ def count_dollars_upward(total):
     True
     """
     "*** YOUR CODE HERE ***"
-    
+    def _count_dollars_upward(total,bill):
+        if total < 0:
+            return 0
+        if total == 1:
+            return 1
+        if bill == 100:
+            return (total % 100 == 0)
+        return _count_dollars_upward(total-bill,bill)+_count_dollars_upward(total,next_larger_dollar(bill))
+    return _count_dollars_upward(total,1)
+
 
 
 def print_move(origin, destination):
