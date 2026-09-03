@@ -124,20 +124,17 @@ def count_dollars(total):
     True
     """
     "*** YOUR CODE HERE ***"
-    if total >= 100:
-        return count_dollars(total - 100) + count_dollars(total - 50) + count_dollars(total - 20) + count_dollars(total - 10) + count_dollars(total - 5) + count_dollars(total - 1)
-    elif total >= 50:
-        return count_dollars(total - 50) + count_dollars(total - 20) + count_dollars(total - 10) + count_dollars(total - 5) + count_dollars(total - 1)
-    elif total >= 20:
-        return count_dollars(total - 20) + count_dollars(total - 10) + count_dollars(total - 5) + count_dollars(total - 1)
-    elif total >= 10:
-        return count_dollars(total - 10) + count_dollars(total - 5) + count_dollars(total - 1)
-    elif total >= 5:
-        return count_dollars(total - 5) * 2
-    elif total >= 1:
-        return count_dollars(total - 1)
-    else:
-        return 1
+    def _count_dollars(total,bill):
+        if total < 0:
+            return 0
+        if total == 1:
+            return 1
+        if bill == 1:
+            return 1
+        return _count_dollars(total-bill,bill)+_count_dollars(total,next_smaller_dollar(bill))
+    return _count_dollars(total,100)
+        
+        
 
 def next_larger_dollar(bill):
     """Returns the next larger bill in order."""
@@ -173,6 +170,7 @@ def count_dollars_upward(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    
 
 
 def print_move(origin, destination):
