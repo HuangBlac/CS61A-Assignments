@@ -7,7 +7,7 @@ def divide(quotients, divisors):
     >>> divide(range(1, 5), range(20, 25))
     {1: [20, 21, 22, 23, 24], 2: [20, 22, 24], 3: [21, 24], 4: [20, 24]}
     """
-    return {____: ____ for ____ in ____}
+    return {quotient : [divisor for divisor in divisors if divisor % quotient == 0 ] for quotient in quotients}
 
 
 def buy(fruits_to_buy, prices, total_amount):
@@ -29,10 +29,11 @@ def buy(fruits_to_buy, prices, total_amount):
             print(cart)
         elif fruits and amount > 0:
             fruit = fruits[0]
-            price = ____
-            for k in ____:
+            #获得当前购买水果的价格
+            price = prices[fruit]
+            for k in range(1, amount // price+1):
                 # Hint: The display function will help you add fruit to the cart.
-                add(____, ____, ____)
+                add(fruits[1:], amount - price*k, cart + display(fruit,k))
     add(fruits_to_buy, total_amount, '')
 
 
