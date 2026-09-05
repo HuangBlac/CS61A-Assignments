@@ -13,7 +13,11 @@ def shuffle(s):
     """
     assert len(s) % 2 == 0, 'len(seq) must be even'
     "*** YOUR CODE HERE ***"
-
+    s1 = []
+    for i in range(len(s)//2):
+        s1.append(s[i])
+        s1.append(s[i+len(s)//2])
+    return s1
 
 def deep_map(f, s):
     """Replace all non-list elements x with f(x) in the nested list s.
@@ -38,6 +42,11 @@ def deep_map(f, s):
     True
     """
     "*** YOUR CODE HERE ***"
+    for i, sub_s in enumerate(s):
+        if type(sub_s) is list:
+            deep_map(f,sub_s)
+        else:
+            s[i] = f(sub_s)
 
 
 HW_SOURCE_FILE=__file__
@@ -47,11 +56,17 @@ def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
     "*** YOUR CODE HERE ***"
+    p = []
+    p.append('planet')
+    p.append(mass)
+    return p
+
 
 def mass(p):
     """Select the mass of a planet."""
     assert is_planet(p), 'must call mass on a planet'
     "*** YOUR CODE HERE ***"
+    return p[1]
 
 def is_planet(p):
     """Whether p is a planet."""
@@ -104,6 +119,13 @@ def balanced(m):
     True
     """
     "*** YOUR CODE HERE ***"
+    if is_planet(m):
+        return True
+    else:
+        if total_mass(end(left(m))) == total_mass(end(right(m))):
+            return True
+        else:
+            return False
 
 
 def berry_finder(t):
@@ -124,6 +146,13 @@ def berry_finder(t):
     True
     """
     "*** YOUR CODE HERE ***"
+    if label(t) == 'berry':
+        return True
+    else:
+        for b in branches(t):
+            if berry_finder(b) is True:
+                return True
+    return False
 
 
 HW_SOURCE_FILE=__file__
@@ -139,6 +168,17 @@ def max_path_sum(t):
     17
     """
     "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        return label(t)
+    else:
+        branch = branches(t)
+        max_branch = max_path_sum(branch[0])
+        for b in branches(t):
+            if max_path_sum(b) > max_branch:
+                max_branch = max_path_sum(b)
+        return label(t) + max_branch
+            
+            
 
 
 def mobile(left, right):
