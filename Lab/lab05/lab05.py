@@ -27,8 +27,16 @@ def insert_items(s, before, after):
     True
     """
     "*** YOUR CODE HERE ***"
+    i = 0
+    while i < len(s):
+        if s[i] == before:
+            s.insert(i+1,after)
+            i += 1
+        i += 1
+    return s
 
-
+    
+            
 def group_by(s, fn):
     """Return a dictionary of lists that together contain the elements of s.
     The key for each list is the value that fn returns when called on any of the
@@ -40,12 +48,12 @@ def group_by(s, fn):
     {9: [-3, 3], 4: [-2, 2], 1: [-1, 1], 0: [0]}
     """
     grouped = {}
-    for ____ in ____:
-        key = ____
+    for sub_s in s:
+        key = fn(sub_s)
         if key in grouped:
-            ____
+            grouped[key].append(sub_s)
         else:
-            grouped[key] = ____
+            grouped[key] = [sub_s]
     return grouped
 
 
@@ -71,6 +79,13 @@ def count_occurrences(t, n, x):
     2
     """
     "*** YOUR CODE HERE ***"
+    count = 0
+    for _ in range(n):
+        item = next(t)
+        if  item == x:
+            count += 1
+    return count
+
 
 
 def repeated(t, k):
@@ -94,6 +109,18 @@ def repeated(t, k):
     """
     assert k > 1
     "*** YOUR CODE HERE ***"
+    item = next(t)
+    count = k
+    item = next(t)
+    while count > 1:
+        compare = next(t)
+        if compare == item:
+            count -= 1
+        else:
+            count = k
+            item = compare
+    return item
+
 
 
 def sprout_leaves(t, leaves):
@@ -130,7 +157,13 @@ def sprout_leaves(t, leaves):
           2
     """
     "*** YOUR CODE HERE ***"
-
+    if is_leaf(t):
+        for leave in leaves:
+            branches(t).append(tree(leave)) 
+        return t
+    else:
+        for b in branches(t):
+            sprout_leaves(b, leaves)
 
 def partial_reverse(s, start):
     """Reverse part of a list in-place, starting with start up to the end of
