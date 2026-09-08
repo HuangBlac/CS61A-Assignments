@@ -178,6 +178,15 @@ def partial_reverse(s, start):
     [1, 2, 7, 6, 5, 3, 4]
     """
     "*** YOUR CODE HERE ***"
+    i = start
+    j = len(s)-1
+    while i < j:
+        temp = s[i]
+        s[i] = s[j]
+        s[j] = temp
+        i += 1
+        j -= 1
+
 
 
 
