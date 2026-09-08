@@ -159,11 +159,11 @@ def sprout_leaves(t, leaves):
     "*** YOUR CODE HERE ***"
     if is_leaf(t):
         for leave in leaves:
-            branches(t).append(tree(leave)) 
-        return t
+            t.append(tree(leave)) 
     else:
         for b in branches(t):
             sprout_leaves(b, leaves)
+    return t
 
 def partial_reverse(s, start):
     """Reverse part of a list in-place, starting with start up to the end of
