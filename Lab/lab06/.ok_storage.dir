@@ -1,0 +1,5 @@
+'Transaction.changed-correct', (0, 66)
+'Transaction.report-correct', (512, 66)
+'Server.register_client-correct', (1024, 66)
+'Client-correct', (1536, 66)
+'Mint-correct', (2048, 66)
