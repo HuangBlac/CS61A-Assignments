@@ -2,3 +2,7 @@
 'count_dollars-correct', (512, 66)
 'count_dollars_upward-correct', (1024, 66)
 'move_stack-correct', (1536, 66)
+'digit_distance-correct', (2048, 66)
+'next_smaller_dollar-correct', (2560, 66)
+'next_larger_dollar-correct', (3072, 66)
+'print_move-correct', (3584, 66)

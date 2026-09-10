@@ -348,7 +348,7 @@ def final_strategy(score, opponent_score):
     # BEGIN PROBLEM 12
     if sus_update(0,score,opponent_score) >= GOAL:
         return 0
-    elif score == 98 and sus_update(0,score,opponent_score) == 99:
+    elif score >= 98:
         return 1
     else:
         return sus_strategy(score, opponent_score,11, num_rolls=6)  # Remove this line once implemented.

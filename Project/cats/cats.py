@@ -39,6 +39,14 @@ def pick(paragraphs, select, k):
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
     # END PROBLEM 1
+    i = 0
+    while i < len(paragraphs) :
+        if select(paragraphs[i]):
+            k -= 1
+        if k < 0:
+            return paragraphs[i]
+        i += 1
+    return ''
 
 
 def about(subject):
@@ -58,6 +66,25 @@ def about(subject):
 
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    def spilt_with_no_punctuation(paragraph):
+        words = []
+        word = ''
+        paragraph = lower(paragraph)
+        for s in paragraph:
+            if s >= 'a' and s <= 'z':
+                word += s
+            elif s == ' ':
+                words.append(word)
+                word = ''
+        words.append(word)
+        return words
+    
+    def _about_select(paragraph):
+        for element in subject:
+            if element in spilt_with_no_punctuation(paragraph):
+                return True
+        return False
+    return _about_select
     # END PROBLEM 2
 
 
@@ -88,6 +115,20 @@ def accuracy(typed, source):
     source_words = split(source)
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    n_source = len(source_words)
+    n_typed = len(typed_words)
+    if n_source == 0 or n_typed == 0:
+        if n_typed == n_source:
+            return 100.0
+        else:
+            return 0.0
+    i = 0
+    k = 0
+    while i < n_source and i < n_typed:
+        if typed_words[i] == source_words[i]:
+            k += 1
+        i += 1
+    return k / n_typed * 100.0
     # END PROBLEM 3
 
 
@@ -106,6 +147,7 @@ def wpm(typed, elapsed):
     assert elapsed > 0, "Elapsed time must be positive"
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    return len(typed) / (5*elapsed) * 60.0
     # END PROBLEM 4
 
 
@@ -167,6 +209,13 @@ def autocorrect(typed_word, word_list, diff_function, limit):
     """
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    corrected_word = typed_word
+    correct_limit = limit
+    for word in word_list:
+        if diff_function(typed_word,word,limit) < correct_limit:
+            corrected_word = word
+            correct_limit = diff_function(typed_word,word,limit)
+    return corrected_word
     # END PROBLEM 5
 
 
