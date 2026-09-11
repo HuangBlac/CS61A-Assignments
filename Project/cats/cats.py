@@ -211,8 +211,16 @@ def autocorrect(typed_word, word_list, diff_function, limit):
     "*** YOUR CODE HERE ***"
     corrected_word = typed_word
     correct_limit = limit
+    flag = 0
     for word in word_list:
-        if diff_function(typed_word,word,limit) < correct_limit:
+        if word == typed_word:
+            return typed_word
+        # 原来我忽略了第一个diff_function等于limit的情况应该直接输出，但是接下来必须严格小于才替换词语和correct_limit
+        if diff_function(typed_word,word,limit) <= correct_limit and flag == 0:
+            corrected_word = word
+            correct_limit = diff_function(typed_word,word,limit)
+            flag = 1
+        if diff_function(typed_word,word,limit) < correct_limit and flag == 1:
             corrected_word = word
             correct_limit = diff_function(typed_word,word,limit)
     return corrected_word
@@ -242,7 +250,17 @@ def furry_fixes(typed, source, limit):
     5
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    n_source = len(source)
+    n_typed = len(typed)
+    if n_source == 0 or n_typed == 0:
+        return abs(n_source-n_typed)
+    if source[0] == typed[0]:
+        return furry_fixes(typed[1:],source[1:],limit)
+    elif limit > 0:
+        return furry_fixes(typed[1:],source[1:],limit-1) + 1
+    else:
+        return limit + abs(n_source-n_typed) + 1
+
     # END PROBLEM 6
 
 
@@ -263,22 +281,29 @@ def minimum_mewtations(typed, source, limit):
     >>> minimum_mewtations("ckiteus", "kittens", big_limit) # ckiteus -> kiteus -> kitteus -> kittens
     3
     """
-    assert False, 'Remove this line'
-    if ___________: # Base cases should go here, you may add more base cases as needed.
+    if len(typed) == 0 or len(source) == 0: # Base cases should go here, you may add more base cases as needed.
         # BEGIN
         "*** YOUR CODE HERE ***"
+        if abs(len(typed)-len(source)) > limit:
+            return limit + 1
+        else:
+            return abs(len(typed)-len(source))
         # END
     # Recursive cases should go below here
-    if ___________: # Feel free to remove or add additional cases
+    if typed[0] == source[0]: # Feel free to remove or add additional cases
         # BEGIN
         "*** YOUR CODE HERE ***"
+        return minimum_mewtations(typed[1:],source[1:],limit)
         # END
+    if limit < 0:
+        return 1
     else:
-        add = ... # Fill in these lines
-        remove = ...
-        substitute = ...
+        add = minimum_mewtations(typed,source[1:],limit-1) # Fill in these lines
+        remove = minimum_mewtations(typed[1:],source,limit-1)
+        substitute = minimum_mewtations(typed[1:],source[1:],limit-1)
         # BEGIN
         "*** YOUR CODE HERE ***"
+        return min(add,remove,substitute)+1
         # END
 
 
@@ -312,7 +337,8 @@ def report_progress(typed, source, user_id, upload):
 
     >>> print_progress = lambda d: print('ID:', d['id'], 'Progress:', d['progress'])
     >>> # The above function displays progress in the format ID: __, Progress: __
-    >>> print_progress({'id': 1, 'progress': 0.6})
+    >>> print_progress({'id': 
+, 'progress': 0.6})
     ID: 1 Progress: 0.6
     >>> typed = ['how', 'are', 'you']
     >>> source = ['how', 'are', 'you', 'doing', 'today']
@@ -325,6 +351,20 @@ def report_progress(typed, source, user_id, upload):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    i = 0
+    k = 0
+    n_source = len(source)
+    n_typed = len(typed)
+    while i < n_source and i < n_typed:
+        if source[i] == typed[i]:
+            k += 1
+        else:
+            break
+        i += 1
+    progress = k / n_source
+    report = {'id':user_id,'progress':progress}
+    upload(report)
+    print(progress)
     # END PROBLEM 8
 
 
@@ -349,6 +389,13 @@ def time_per_word(words, timestamps_per_player):
     tpp = timestamps_per_player  # A shorter name (for convenience)
     # BEGIN PROBLEM 9
     times = []  # You may remove this line
+    for times_player in tpp:
+        time = []
+        i = 1
+        while i < len(times_player):
+            time.append(times_player[i]-times_player[i-1])
+            i += 1
+        times.append(time)
     # END PROBLEM 9
     return {'words': words, 'times': times}
 
@@ -376,6 +423,21 @@ def fastest_words(words_and_times):
     word_indices = range(len(words))    # contains an *index* for each word
     # BEGIN PROBLEM 10
     "*** YOUR CODE HERE ***"
+    words_set_fastest = []
+    #初始化单词表
+    for _ in player_indices:
+        words_set_fastest.append([])
+    #循环遍历每一个单词
+    for indice_word in word_indices:
+        #对于每一个单词，给出耗时最少的那个人物，起始为0，接下来只有player对应的时间更少，才会替换indice_player
+        indice_player_fastest_word = 0
+        for indice_player in player_indices:
+            if times[indice_player][indice_word] < times[indice_player_fastest_word][indice_word]:
+                indice_player_fastest_word = indice_player
+        #过完所有人物循环之后，将那个时间最短对应人物的编号处添加上这个循环对应的单词
+        words_set_fastest[indice_player_fastest_word].append(words[indice_word])
+    return words_set_fastest
+
     # END PROBLEM 10
 
 
