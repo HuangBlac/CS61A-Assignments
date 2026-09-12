@@ -10,8 +10,19 @@ def hailstone(n):
     1
     """
     "*** YOUR CODE HERE ***"
-
-
+    def hail_sequence(n):
+        while True:
+            yield n
+            if n == 1:
+                n = 1
+            else:
+                if n % 2 == 0:
+                    n = n // 2
+                else:
+                    n = 3 * n + 1
+    sequence = hail_sequence(n)
+    return sequence
+            
 def merge(a, b):
     """
     Return a generator that has all of the elements of generators a and b,
@@ -31,10 +42,17 @@ def merge(a, b):
     while True:
         if a_val == b_val:
             "*** YOUR CODE HERE ***"
+            yield a_val
+            a_val = next(a)
+            b_val = next(b)
         elif a_val < b_val:
             "*** YOUR CODE HERE ***"
+            yield a_val
+            a_val = next(a)
         else:
             "*** YOUR CODE HERE ***"
+            yield b_val
+            b_val = next(b)
 
 
 def stair_ways(n):
@@ -51,7 +69,15 @@ def stair_ways(n):
     []
     """
     "*** YOUR CODE HERE ***"
-
+    def sequence(n,all_stair_way):
+        if n == 0:
+            yield all_stair_way
+        elif n == 1:
+            yield sequence(n,all_stair_way+[1])
+        else:
+            yield sequence(n-1,all_stair_way+[1])
+            yield sequence(n-2,all_stair_way+[2])
+    return sequence(n,[])
 
 def yield_paths(t, value):
     """

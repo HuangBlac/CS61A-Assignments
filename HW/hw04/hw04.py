@@ -122,8 +122,8 @@ def balanced(m):
     if is_planet(m):
         return True
     else:
-        if total_mass(end(left(m))) == total_mass(end(right(m))):
-            return True
+        if length(left(m))*total_mass(end(left(m))) == length(right(m))*total_mass(end(right(m))):
+            return balanced(end(left(m))) and balanced(end(right(m)))
         else:
             return False
 
