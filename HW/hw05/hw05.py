@@ -73,10 +73,13 @@ def stair_ways(n):
         if n == 0:
             yield all_stair_way
         elif n == 1:
-            yield sequence(n,all_stair_way+[1])
+            all_stair_way = all_stair_way+[1]
+            yield all_stair_way
         else:
-            yield sequence(n-1,all_stair_way+[1])
-            yield sequence(n-2,all_stair_way+[2])
+            for way in sequence(n-1,all_stair_way+[1]):
+                yield way
+            for way in sequence(n-2,all_stair_way+[2]):
+                yield way
     return sequence(n,[])
 
 def yield_paths(t, value):
@@ -115,11 +118,10 @@ def yield_paths(t, value):
     [[0, 2], [0, 2, 1, 2]]
     """
     if label(t) == value:
-        yield ____
+        yield [value]
     for b in branches(t):
-        for ____ in ____:
-            yield ____
-
+        for v in yield_paths(b,value):
+            yield [label(t)] + v
 
 
 # Tree Data Abstraction
